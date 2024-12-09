@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rdp_todolist/services/firestore_services.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,6 +12,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FirebaseFirestore db =
+      FirebaseFirestore.instance; //new firestore instance
+  final TextEditingController nameController =
+      TextEditingController(); //captures textform input
+  final List<Map<String, dynamic>> tasks = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +26,9 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(child: Image.asset('assets/rdplogo.png')),
+            Expanded(
+              child: Image.asset('assets/rdplogo.png', height: 80),
+            ),
             const Text(
               'Daily Planner',
               style: TextStyle(
@@ -26,6 +36,16 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
+      ),
+      body: Column(
+        children: [
+          TableCalendar(
+            calendarFormat: CalendarFormat.month,
+            focusedDay: DateTime.now(),
+            firstDay: DateTime(2024),
+            lastDay: DateTime(2025),
+          ),
+        ],
       ),
     );
   }
