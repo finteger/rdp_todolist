@@ -39,14 +39,34 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          TableCalendar(
-            calendarFormat: CalendarFormat.month,
-            focusedDay: DateTime.now(),
-            firstDay: DateTime(2024),
-            lastDay: DateTime(2025),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TableCalendar(
+                    calendarFormat: CalendarFormat.month,
+                    focusedDay: DateTime.now(),
+                    firstDay: DateTime(2024),
+                    lastDay: DateTime(2025),
+                  ),
+                ],
+              ),
+            ),
           ),
+          buildAddTaskSection(nameController),
         ],
       ),
     );
   }
+}
+
+//Build the section for adding tasks
+Widget buildAddTaskSection(nameController) {
+  return TextField(
+    controller: nameController,
+    decoration: const InputDecoration(
+      labelText: 'Add Task',
+      border: OutlineInputBorder(),
+    ),
+  );
 }
