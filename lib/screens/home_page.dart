@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Image.asset('assets/rdplogo.png'),
+            Expanded(child: Image.asset('assets/rdplogo.png')),
             const Text(
               'Daily Planner',
               style: TextStyle(
