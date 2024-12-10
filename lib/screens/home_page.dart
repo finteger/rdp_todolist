@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
           buildAddTaskSection(nameController),
         ],
       ),
+      drawer: Drawer(),
     );
   }
 }
