@@ -17,6 +17,30 @@ class _HomePageState extends State<HomePage> {
       TextEditingController(); //captures textform input
   final List<Map<String, dynamic>> tasks = [];
 
+  //Function that adds new tasks to local state & firestore database
+  Future<void> addTask() async {
+    final taskName = nameController.text.trim();
+
+    if (taskName.isNotEmpty) {
+      final newTask = {
+        'name': taskName,
+        'completed': false,
+        'timestamp': FieldValue.serverTimestamp(),
+      };
+
+      //docRef gives us the insertion id of the task from the database
+      final docRef = await db.collection('tasks').add(newTask);
+
+      //Adding tasks locally
+      setState(() {
+        tasks.add({
+          'id': docRef,
+          ...newTask,
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
