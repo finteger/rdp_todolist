@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
           ...newTask,
         });
       });
+      nameController.clear();
     }
   }
 
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          buildAddTaskSection(nameController),
+          buildAddTaskSection(nameController, addTask),
         ],
       ),
       drawer: Drawer(),
@@ -85,12 +86,22 @@ class _HomePageState extends State<HomePage> {
 }
 
 //Build the section for adding tasks
-Widget buildAddTaskSection(nameController) {
-  return TextField(
-    controller: nameController,
-    decoration: const InputDecoration(
-      labelText: 'Add Task',
-      border: OutlineInputBorder(),
-    ),
+Widget buildAddTaskSection(nameController, addTask) {
+  return Row(
+    children: [
+      Expanded(
+        child: TextField(
+          controller: nameController,
+          decoration: const InputDecoration(
+            labelText: 'Add Task',
+            border: OutlineInputBorder(),
+          ),
+        ),
+      ),
+      ElevatedButton(
+        onPressed: addTask, //Adds tasks when pressed
+        child: Text('Add Task'),
+      ),
+    ],
   );
 }
