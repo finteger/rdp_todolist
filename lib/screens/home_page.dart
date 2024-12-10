@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       //Adding tasks locally
       setState(() {
         tasks.add({
-          'id': docRef,
+          'id': docRef.id,
           ...newTask,
         });
       });
@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
                     firstDay: DateTime(2024),
                     lastDay: DateTime(2025),
                   ),
+                  buildTaskList(tasks)
                 ],
               ),
             ),
@@ -103,5 +104,42 @@ Widget buildAddTaskSection(nameController, addTask) {
         child: Text('Add Task'),
       ),
     ],
+  );
+}
+
+//Widget that displays the task item on the UI
+Widget buildTaskList(tasks) {
+  return ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: tasks.length,
+    itemBuilder: (context, index) {
+      final task = tasks[index];
+
+      return ListTile(
+        leading: Icon(
+          task['completed'] ? Icons.check_circle : Icons.circle_outlined,
+        ),
+        title: Text(
+          task['name'],
+          style: TextStyle(
+            decoration: task['completed'] ? TextDecoration.lineThrough : null,
+          ),
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Checkbox(
+              value: task['completed'],
+              onChanged: null,
+            ),
+            const IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: null,
+            ),
+          ],
+        ),
+      );
+    },
   );
 }
